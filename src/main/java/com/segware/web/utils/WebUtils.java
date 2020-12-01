@@ -1,4 +1,4 @@
-package com.segware.utils;
+package com.segware.web.utils;
 
 import javax.servlet.http.HttpServletRequest;
 
