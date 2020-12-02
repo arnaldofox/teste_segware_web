@@ -3,14 +3,78 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
 
     <h:head>
-        <title>xxxxxx</title>
+        <title>Posts</title>
+        <h:outputStylesheet name="primeicons/primeicons.css" library="primefaces" />
     </h:head>
 
-    <h:body style="background-color: #ddd !important">
-        Olá Mundo!
+    <f:metadata>
+        <f:viewAction action="#{indexMB.listAllPost()}"/>
+    </f:metadata>
+
+    <h:body>
+        <h:form>
+
+            <p:messages/>
+
+            <div class="ui-g">
+                <div class="ui-g-12 ui-md-12 ui-lg-12">
+                    <h:panelGroup layout="block" id="painelPost">
+
+                        <p:textEditor widgetVar="editor" value="#{indexMB.post.descricao}" height="150" style="margin-bottom:10px" placeholder="Faça uma postagem">
+                            <f:facet name="toolbar">
+                                <span class="ql-formats">
+                                    <button class="ql-bold"></button>
+                                    <button class="ql-italic"></button>
+                                    <button class="ql-underline"></button>
+                                    <button class="ql-strike"></button>
+                                </span>
+                            </f:facet>
+                        </p:textEditor>
+
+                        <div>
+                            <p:commandButton icon="pi pi-save" value="Postar" action="#{indexMB.createPost()}" process="painelPost" update="@form" title="Publicar Post"/>
+                        </div>
+
+                    </h:panelGroup>
+                </div>
+            </div>
+
+            <p:spacer/>
+
+            <h:panelGroup id="panelPost" layout="block">
+                <div class="ui-g">
+                    <ui:repeat id="idRepeatPost" var="post" value="#{indexMB.posts}">
+
+                        <div class="ui-g-12 ui-md-6 ui-lg-6">
+                            <p:panel>
+                                <f:facet name="header">
+                                    <h:outputText value="Postagem: #{post.id}" />
+                                </f:facet>
+                                <f:facet name="footer">
+                                    <div style="text-align: right; font-size: 12px">
+                                        Data/Hora da Postagem:
+                                        <h:outputText value="#{post.dataHora}">
+                                            <f:convertDateTime pattern="dd/MM/yyyy HH:mm:ss" />
+                                        </h:outputText>
+                                    </div>
+                                </f:facet>
+                                <f:facet name="actions">
+                                    <p:commandButton icon="pi pi-arrow-up" value="#{post.upVote}" action="#{indexMB.upVotes(post)}" process="@this" update="@form:panelPost" title="Gostei"/>
+                                    <p:commandButton icon="pi pi-arrow-down" value="#{post.downVote}" action="#{indexMB.downVotes(post)}" process="@this" update="@form:panelPost" title="Não gostei"/>
+                                </f:facet>
+                                <h:outputText value="#{post.descricao}" escape="false"/>
+                            </p:panel>
+                        </div>
+
+                    </ui:repeat>
+                </div>
+            </h:panelGroup>
+
+        </h:form>
     </h:body>
 
 </html>

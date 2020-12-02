@@ -17,7 +17,7 @@ public class PostVO implements Serializable {
 
     private String descricao;
 
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "America/Sao_Paulo")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date dataHora;
 
     private String ip;
